@@ -1,5 +1,8 @@
-import { user } from "./services/user.js";
-import { repositories } from "./services/repositories.js";
+import { getUser } from "./services/user.js";
+import { getRepositories } from "./services/repositories.js";
+
+import { userObject } from "./objects/userObject.js";
+import { screen } from "./objects/screen.js";
 
 document.getElementById("btn-search").addEventListener("click", () => {
   const userName = document.getElementById("input-search").value;
@@ -11,13 +14,21 @@ document.getElementById("input-search").addEventListener("keyup", (e) => {
   const key = e.which || e.keyCode;
   const isEnterKeyPressed = key === 13;
   if (isEnterKeyPressed) {
-    getUserProfile(userName);
+    getUserData(userName);
   }
 });
 
-function getUserProfile(userName) {
+async function getUserData(userName) {
+  const userResponse = await getUser(userName);
+  const repositoriesResponse = await getRepositories(userName);
 
-  user(userName).then((userData) => {
+  userObject.setInfo(userResponse);
+  userObject.setRepositories(repositoriesResponse);
+
+  screen.renderUser(userObject);
+
+  /* Antes da refatoração
+  getUser(userName).then((userData) => {
     let userInfo = `
     <div class="info">
         <img src="${userData.avatar_url} alt="Foto do perfil do usuário"/>
@@ -30,12 +41,12 @@ function getUserProfile(userName) {
     document.querySelector(".profile-data").innerHTML = userInfo;
 
     getUserRepositories(userName);
-  });
+  }); */
 }
 
+  /* 
 function getUserRepositories(userName) {
-  repositories(userName).then((reposData) => {
-
+ getRepositories(userName).then((reposData) => {
     let repositoriesItems = "";
 
     reposData.forEach((repo) => {
@@ -48,5 +59,6 @@ function getUserRepositories(userName) {
         <ul>${repositoriesItems}</ul>
     </div>
         `;
-  });
+  }); 
 }
+*/
