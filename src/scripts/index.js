@@ -1,7 +1,7 @@
 import { getUser } from "./services/user.js";
 import { getRepositories } from "./services/repositories.js";
 
-import { userObject } from "./objects/userObject.js";
+import { user } from "./objects/user.js";
 import { screen } from "./objects/screen.js";
 
 document.getElementById("btn-search").addEventListener("click", () => {
@@ -41,43 +41,20 @@ async function getUserData(userName) {
 
   const repositoriesResponse = await getRepositories(userName);
 
-  userObject.setInfo(userResponse);
-  userObject.setRepositories(repositoriesResponse);
+  user.setInfo(userResponse);
+  user.setRepositories(repositoriesResponse);
 
-  screen.renderUser(userObject);
+  screen.renderUser(user);
+  
 }
-
-/* Antes da refatoração
-getUser(userName).then((userData) => {
-  let userInfo = `
-  <div class="info">
-      <img src="${userData.avatar_url} alt="Foto do perfil do usuário"/>
-      <div class="data">
-          <h1>${userData.name ?? "Usuário não informou nome 😕"}</h1>
-          <p>${userData.bio ?? "Usuário não informou bio 😕"}</p>
-      </div>
-  </div>`;
-
-  document.querySelector(".profile-data").innerHTML = userInfo;
-
-  getUserRepositories(userName);
-}); */
 
 /* 
-function getUserRepositories(userName) {
- getRepositories(userName).then((reposData) => {
-    let repositoriesItems = "";
+Você precisa mostrar também
 
-    reposData.forEach((repo) => {
-      repositoriesItems += `<li><a href="${repo.html_url}">${repo.name}</a></li>`;
-    });
+Número de seguidores do usuário
+userResponse.followers
 
-    document.querySelector(".profile-data").innerHTML += `
-    <div class="repositories section">
-        <h2>Repositórios</h2>
-        <ul>${repositoriesItems}</ul>
-    </div>
-        `;
-  }); 
-}
+Número de pessoas que o usuário está
+seguindo 
+userResponse.following
 */

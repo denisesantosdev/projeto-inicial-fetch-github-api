@@ -1,4 +1,4 @@
-const userObject = {
+const user = {
   avatarUrl: "",
   name: "",
   bio: "",
@@ -15,4 +15,4 @@ const userObject = {
   },
 };
 
-export { userObject }
+export { user }
