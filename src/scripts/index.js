@@ -6,6 +6,10 @@ import { screen } from "./objects/screen.js";
 
 document.getElementById("btn-search").addEventListener("click", () => {
   const userName = document.getElementById("input-search").value;
+  console.log(userName);
+  if (validateEmptyInput(userName)) {
+    return;
+  }
   getUserProfile(userName);
 });
 
@@ -16,35 +20,50 @@ document.getElementById("input-search").addEventListener("keyup", (e) => {
   if (isEnterKeyPressed) {
     getUserData(userName);
   }
+
+  validateEmptyInput(userName);
 });
+
+function validateEmptyInput(userName) {
+  if (userName.length === 0) {
+    alert("Preencha o campo com o nome de usuário");
+    return true;
+  }
+}
 
 async function getUserData(userName) {
   const userResponse = await getUser(userName);
+
+  if(userResponse.message==="Not Found"){
+    screen.renderNotFound()
+    return
+  }
+
   const repositoriesResponse = await getRepositories(userName);
 
   userObject.setInfo(userResponse);
   userObject.setRepositories(repositoriesResponse);
 
   screen.renderUser(userObject);
-
-  /* Antes da refatoração
-  getUser(userName).then((userData) => {
-    let userInfo = `
-    <div class="info">
-        <img src="${userData.avatar_url} alt="Foto do perfil do usuário"/>
-        <div class="data">
-            <h1>${userData.name ?? "Usuário não informou nome 😕"}</h1>
-            <p>${userData.bio ?? "Usuário não informou bio 😕"}</p>
-        </div>
-    </div>`;
-
-    document.querySelector(".profile-data").innerHTML = userInfo;
-
-    getUserRepositories(userName);
-  }); */
 }
 
-  /* 
+/* Antes da refatoração
+getUser(userName).then((userData) => {
+  let userInfo = `
+  <div class="info">
+      <img src="${userData.avatar_url} alt="Foto do perfil do usuário"/>
+      <div class="data">
+          <h1>${userData.name ?? "Usuário não informou nome 😕"}</h1>
+          <p>${userData.bio ?? "Usuário não informou bio 😕"}</p>
+      </div>
+  </div>`;
+
+  document.querySelector(".profile-data").innerHTML = userInfo;
+
+  getUserRepositories(userName);
+}); */
+
+/* 
 function getUserRepositories(userName) {
  getRepositories(userName).then((reposData) => {
     let repositoriesItems = "";
