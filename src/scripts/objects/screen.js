@@ -37,18 +37,19 @@ const screen = {
         </div>`;
     }
 
-    let repoName = [];
     let eventMessage = [];
     this.userEvents.innerHTML = "<h2>Eventos</h2>";
 
     user.events.forEach((event) => {
       if (event.type === "CreateEvent" || event.type === "PushEvent") {
-        repoName = event.repo.name;
-        eventMessage = event.payload.commits ?? "Sem mensagem";
+        event.payload.commits === undefined
+          ? (eventMessage = "Sem mensagem")
+          : (eventMessage = event.payload.commits[0].message);
+
         this.userEvents.innerHTML += `
         <div>
           <ul>
-            <li><span class="repo-name">${repoName}</span> - ${eventMessage[0].message ?? "Sem mensagem"}</li>
+            <li><span class="repo-name">${event.repo.name}</span> - ${eventMessage}</li>
           </ul>
         <div>
         `;
