@@ -48,9 +48,7 @@ const screen = {
         this.userEvents.innerHTML += `
         <div>
           <ul>
-            <li><span class="repo-name">${repoName}</span> - ${
-          eventMessage[0].message ?? "Sem mensagem"
-        }</li>
+            <li><span class="repo-name">${repoName}</span> - ${eventMessage[0].message ?? "Sem mensagem"}</li>
           </ul>
         <div>
         `;

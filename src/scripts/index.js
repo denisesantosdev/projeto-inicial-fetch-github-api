@@ -6,12 +6,8 @@ import { user } from "./objects/user.js";
 import { screen } from "./objects/screen.js";
 
 document.getElementById("btn-search").addEventListener("click", () => {
-  //const userName = document.getElementById("input-search").value;
-  const userName = "denisesantosdev";
+  const userName = document.getElementById("input-search").value;
 
-  /* if (validateEmptyInput(userName)) {
-    return;
-  } */
   getUserData(userName);
 });
 
