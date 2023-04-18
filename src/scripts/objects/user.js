@@ -20,7 +20,6 @@ const user = {
   },
   setEvents(events) {
     this.events = events
-    console.log(events);
   },
 };
 

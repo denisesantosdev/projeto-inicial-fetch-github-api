@@ -47,13 +47,7 @@ async function getUserData(userName) {
   user.setInfo(userResponse);
   user.setRepositories(repositoriesResponse);
   user.setEvents(eventsResponse);
-  //console.log(user.events);
  
   screen.renderUser(user);
 }
 
-/* 
-10 últimos eventos do usuário 
-'CreateEvent' e 'PushEvent' = type
-to do create evetn elemtn rencer user
-*/

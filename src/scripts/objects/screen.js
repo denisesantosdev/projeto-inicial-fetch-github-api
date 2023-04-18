@@ -1,5 +1,6 @@
 const screen = {
   userProfile: document.querySelector(".profile-data"),
+  userEvents: document.querySelector(".events-data"),
   renderUser(user) {
     this.userProfile.innerHTML = `
     <div class="info">
@@ -14,7 +15,17 @@ const screen = {
 
     let repositoriesItens = "";
     user.repositories.forEach((repo) => {
-      repositoriesItens += `<li><a href="${repo.html_url}" target="_blank">${repo.name}</a></li>`;
+      repositoriesItens += `
+      <li>
+        <a href="${repo.html_url}" target="_blank">${repo.name}
+        <div class="repo-info">
+          <span>🍴 ${repo.forks}</span>
+          <span>⭐ ${repo.stargazers_count}</span>
+          <span>👀 ${repo.watchers_count}</span>
+          <span>👩‍💻 ${repo.language ?? "Linguagem não encontrada"}</span>
+        </div>
+        </a>
+      </li>`;
     });
 
     if (user.repositories.length > 0) {
@@ -28,12 +39,13 @@ const screen = {
 
     let repoName = [];
     let eventMessage = [];
+    this.userEvents.innerHTML = "<h2>Eventos</h2>"
+
     user.events.forEach((event) => {
       if (event.type === "CreateEvent" || event.type === "PushEvent") {
         repoName = event.repo.name;
         eventMessage = event.payload.commits ?? "Sem mensagem";
-        console.log(repoName, eventMessage);
-        this.userProfile.innerHTML += `
+        this.userEvents.innerHTML += `
         <div>
           <ul>
             <li>${repoName} - ${eventMessage[0].message ?? "Sem mensagem" }</li>
