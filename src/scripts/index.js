@@ -1,20 +1,22 @@
 import { getUser } from "./services/user.js";
 import { getRepositories } from "./services/repositories.js";
+import { getEvents } from "./services/events.js";
 
 import { user } from "./objects/user.js";
 import { screen } from "./objects/screen.js";
 
 document.getElementById("btn-search").addEventListener("click", () => {
-  const userName = document.getElementById("input-search").value;
-  console.log(userName);
-  if (validateEmptyInput(userName)) {
+  //const userName = document.getElementById("input-search").value;
+ const userName = 'denisesantosdev'
+
+  /* if (validateEmptyInput(userName)) {
     return;
-  }
-  getUserProfile(userName);
+  } */
+  getUserData(userName);
 });
 
 document.getElementById("input-search").addEventListener("keyup", (e) => {
-  const userName = e.target.value;
+ const userName = e.target.value;
   const key = e.which || e.keyCode;
   const isEnterKeyPressed = key === 13;
   if (isEnterKeyPressed) {
@@ -34,27 +36,24 @@ function validateEmptyInput(userName) {
 async function getUserData(userName) {
   const userResponse = await getUser(userName);
 
-  if(userResponse.message==="Not Found"){
-    screen.renderNotFound()
-    return
+  if (userResponse.message === "Not Found") {
+    screen.renderNotFound();
+    return;
   }
 
   const repositoriesResponse = await getRepositories(userName);
+  const eventsResponse = await getEvents(userName);
 
   user.setInfo(userResponse);
   user.setRepositories(repositoriesResponse);
-
+  user.setEvents(eventsResponse);
+  //console.log(user.events);
+ 
   screen.renderUser(user);
-  
 }
 
 /* 
-Você precisa mostrar também
-
-Número de seguidores do usuário
-userResponse.followers
-
-Número de pessoas que o usuário está
-seguindo 
-userResponse.following
+10 últimos eventos do usuário 
+'CreateEvent' e 'PushEvent' = type
+to do create evetn elemtn rencer user
 */

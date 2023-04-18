@@ -12,23 +12,40 @@ const screen = {
         </div>
     </div>`;
 
-    let repositoriesItens = ''
-    user.repositories.forEach(repo => {
-        repositoriesItens += `<li><a href="${repo.html_url}" target="_blank">${repo.name}</a></li>`
+    let repositoriesItens = "";
+    user.repositories.forEach((repo) => {
+      repositoriesItens += `<li><a href="${repo.html_url}" target="_blank">${repo.name}</a></li>`;
     });
 
-    if(user.repositories.length > 0){
-        this.userProfile.innerHTML += `
+    if (user.repositories.length > 0) {
+      this.userProfile.innerHTML += `
         <div class="repositories section">
             <h2>
                 <ul>${repositoriesItens}</ul>
             </h2>
-        </div>`
+        </div>`;
     }
+
+    let repoName = [];
+    let eventMessage = [];
+    user.events.forEach((event) => {
+      if (event.type === "CreateEvent" || event.type === "PushEvent") {
+        repoName = event.repo.name;
+        eventMessage = event.payload.commits ?? "Sem mensagem";
+        console.log(repoName, eventMessage);
+        this.userProfile.innerHTML += `
+        <div>
+          <ul>
+            <li>${repoName} - ${eventMessage[0].message ?? "Sem mensagem" }</li>
+          </ul>
+        <div>
+        `;
+      }
+    });
   },
-  renderNotFound(){
-    this.userProfile.innerHTML="<h3>Usuário não encontrado</h3>"
-  }
+  renderNotFound() {
+    this.userProfile.innerHTML = "<h3>Usuário não encontrado</h3>";
+  },
 };
 
 export { screen };
