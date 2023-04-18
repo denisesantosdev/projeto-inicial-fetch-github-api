@@ -19,7 +19,7 @@ const user = {
     this.repositories = repositories;
   },
   setEvents(events) {
-    this.events = events
+    this.events = events;
   },
 };
 

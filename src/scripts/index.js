@@ -7,7 +7,7 @@ import { screen } from "./objects/screen.js";
 
 document.getElementById("btn-search").addEventListener("click", () => {
   //const userName = document.getElementById("input-search").value;
- const userName = 'denisesantosdev'
+  const userName = "denisesantosdev";
 
   /* if (validateEmptyInput(userName)) {
     return;
@@ -16,7 +16,7 @@ document.getElementById("btn-search").addEventListener("click", () => {
 });
 
 document.getElementById("input-search").addEventListener("keyup", (e) => {
- const userName = e.target.value;
+  const userName = e.target.value;
   const key = e.which || e.keyCode;
   const isEnterKeyPressed = key === 13;
   if (isEnterKeyPressed) {
@@ -47,7 +47,6 @@ async function getUserData(userName) {
   user.setInfo(userResponse);
   user.setRepositories(repositoriesResponse);
   user.setEvents(eventsResponse);
- 
+
   screen.renderUser(user);
 }
-

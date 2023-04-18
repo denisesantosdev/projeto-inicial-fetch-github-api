@@ -8,8 +8,8 @@ const screen = {
         <div class="data">
             <h1>${user.name ?? "Usuário não informou nome 😕"}</h1>
             <p>${user.bio ?? "Usuário não informou bio 😕"}</p>
-            <p>Seguidores: ${user.followers}</p>
-            <p>Seguindo: ${user.following}</p>
+            <p>👥Seguidores: ${user.followers}</p>
+            <p>👥Seguindo: ${user.following}</p>
         </div>
     </div>`;
 
@@ -39,7 +39,7 @@ const screen = {
 
     let repoName = [];
     let eventMessage = [];
-    this.userEvents.innerHTML = "<h2>Eventos</h2>"
+    this.userEvents.innerHTML = "<h2>Eventos</h2>";
 
     user.events.forEach((event) => {
       if (event.type === "CreateEvent" || event.type === "PushEvent") {
@@ -48,7 +48,9 @@ const screen = {
         this.userEvents.innerHTML += `
         <div>
           <ul>
-            <li>${repoName} - ${eventMessage[0].message ?? "Sem mensagem" }</li>
+            <li><span class="repo-name">${repoName}</span> - ${
+          eventMessage[0].message ?? "Sem mensagem"
+        }</li>
           </ul>
         <div>
         `;
